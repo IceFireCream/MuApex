@@ -1,0 +1,29 @@
+# Nacos帮助文档: https://nacos.io/zh-cn/docs/concepts.html
+# Nacos认证信息
+server:
+  port: 8080
+spring:
+  application:
+    name: mu-apex-web-impl
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: WEB_GROUP
+        namespace: apex_nacos
+        prefix: apexWeb
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: apex_nacos
+        group: WEB_GROUP
+  thymeleaf:
+    cache: false
+    encoding: utf-8
+    prefix: classpath:/templates/
+    suffix: .html
+  resources:
+    static-locations: classpath:/static/
+logging:
+  level:
+    com.mu.mapper: debug

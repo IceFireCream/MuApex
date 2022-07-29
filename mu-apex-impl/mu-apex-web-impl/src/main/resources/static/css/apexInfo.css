@@ -1,0 +1,378 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    /* background: url(https://data3.origin.com/asset/content/dam/originx/web/app/games/apex/apex/F2P/s13/APEX_Legends_Screenshots_S13_StormPoint_MapUpdate_Wide_B_CLEAN.png/8f2578d8-0cd5-4def-9844-b890482e6ef1/original.png); */
+    /* background: url(../img/apex-legends.png); */
+    /* background: url(../img/apex1.png); */
+    /* background-position: center; */
+    /* background-position-x: 200px; */
+    background: gray;
+    /* 居中 */
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-start;
+
+    font-family: "yuwei";
+
+    overflow: hidden;
+
+}
+.backimgL{
+    width: 500px;
+    position: absolute;
+    left: -100px;
+    top: 0;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+}
+.backimgR{
+    width: 500px;
+    position: absolute;
+    right: -100px;
+    top: 0;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toolsdiv {
+    width: calc(50vw - 150px);
+    height: 100%;
+}
+.middlediv {
+    /* width: 300px; */
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+
+}
+
+.maindiv {
+    width: 300px;
+    max-height: 700px;
+    height: 500px;
+
+    backdrop-filter: blur(5px);
+
+    border-radius: 25px;
+    box-shadow: 0 0 15px black;
+
+    position: relative;
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%,-50%); */
+    top: 0;
+    left: 0;
+
+    /* 内部元素垂直居中 */
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+
+    z-index: 1;
+}
+.maindiv > div {
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    align-items: center;
+
+    overflow: hidden;
+}
+.imgdiv{
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.spandiv{
+
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+.searchdiv{
+    position: relative;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 300px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.imgdiv > img {
+    width: 50px;
+    height: 50px;
+
+    position: relative;
+    bottom: 0;
+    left: 0;
+    /* 禁用点击 */
+    pointer-events: none;
+
+    z-index: 1;
+
+}
+.spandiv > span {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    color: white;
+    font-size: 50px;
+
+    z-index: 1;
+}
+.inputdiv {
+    width: 100%;
+    height: 80px;
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.inputdiv > input {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    width: 150px;
+    height: 40px;
+
+    outline: none;
+    border: 1px none white;
+    border-bottom-style: solid;
+
+    background: none;
+
+    text-align: center;
+    color: white;
+
+    transition: all 0.5s linear;
+}
+.inputdiv > input:hover {
+    width: 280px;
+}
+.inputdiv > input::-webkit-input-placeholder {
+    color: white;
+    font-size: 14px;
+}
+.btndiv {
+    width: 100%;
+    height: 140px;
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btndiv > button {
+    width: 150px;
+    height: 40px;
+
+    position: relative;
+    top: 0px;
+    left: 0;
+
+    background: none;
+
+    border: 1px solid white;
+    border-radius: 25px;
+
+    transition: all 0.5s linear;
+}
+.btndiv > button:hover {
+    box-shadow: 0 0 15px black;
+}
+.btndiv > button > span {
+    text-indent: 10px;
+    letter-spacing: 10px;
+    font-size: 20px;
+    color: white;
+    display: block;
+}
+
+.modeldiv {
+    width: 300px;
+    max-width: 300px;
+    height: 440px;
+    max-height: 640px;
+    /* background-image: linear-gradient(to top, #753a88, #cc2b5e); */
+
+    border-radius: 25px;
+    box-shadow: 0 0 15px black;
+
+    position: absolute;
+    top: calc(50% + 30px);
+    left: 0;
+    transform: translate(0%,-50%);
+
+    z-index: -1;
+    opacity: 0;
+
+    backdrop-filter: blur(2px);
+}
+
+.modelimg {
+    width: inherit;
+    max-width: inherit;
+    height: 50px;
+
+    position: relative;
+    bottom: 60px;
+
+    box-shadow: 0 0 15px black;
+    border-radius: 25px;
+    overflow: hidden;
+
+    /* 水平垂直 */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    opacity: 0;
+}
+
+.modelimg > img {
+    width: 350px;
+
+    position: relative;
+    top: 20px;
+
+    /* 水平偏移量 */
+    --offX: 0px;
+
+    transform: translateX(var(--offX));
+    filter: blur(1px);
+}
+
+.contentdiv {
+    height: inherit;
+    width: inherit;
+    max-width: inherit;
+    max-height: inherit;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    border-radius: 25px;
+
+    z-index: 1;
+    opacity: 1;
+}
+.userinfo {
+    width: 100%;
+    height: 40%;
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+@font-face {
+    font-family: "yuwei";
+    src: url(../font/YuWeiShuFaXingShuJianTi-1.ttf);
+}
+.userinfo > span {
+    width: 100%;
+    height: 16%;
+    color: white;
+    font-size: 20px;
+
+    position: relative;
+    top: 20px;
+    left: 20px;
+
+    opacity: 0;
+
+}
+.rankdiv{
+    width: 100%;
+    height: 30%;
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.rankimg {
+    width: 40%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* align-content: center; */
+    justify-content: center;
+}
+.rankdiv img {
+    width: 0px;
+    position: relative;
+    left: 10px;
+
+    opacity: 0;
+
+}
+
+.rankinfo {
+     width: 60%;
+    /* height: 100%; */
+    position: relative;
+    top: 0;
+    left: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.rankinfo > span {
+    width: 100%;
+    /* height: 50%; */
+    color: white;
+    font-size: 20px;
+
+    opacity: 0;
+}

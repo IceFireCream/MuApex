@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../css/apexInfo.css"/>
+    <title>查询Apex分数</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if($(window).width() > 600){
+                $("img.backimgL").css("opacity", "1");
+                $("img.backimgR").css("opacity", "1");
+            }
+            $(window).on("resize",function () {
+                //首先判断body的是否大于360px ,360px是最大展示面积
+                var toolswidth = ($("body").width() - 360) / 2;
+                if($("body").width() <= 360){
+                    //如果大于则改变
+                    toolswidth = 0;
+                }
+                $("div.toolsdiv").css("width",toolswidth);
+                //更新模态
+                var modelwidth = $("body").width() - 100;
+                $("div.modeldiv").css("width",modelwidth);
+
+                //背景图片的可见度
+                if($(window).width() > 600){
+                    $("img.backimgL").css("opacity", "1");
+                    $("img.backimgR").css("opacity", "1");
+                }
+                if($(window).width() <= 600){
+                    $("img.backimgL").css("opacity", "0");
+                    $("img.backimgR").css("opacity", "0");
+                }
+            })
+
+            $("#searchBtn").click(function () {
+                var player = $.trim($("#player").val());
+                var platform = $.trim($("#platform").val());
+                if (player == ""){
+                    return false;
+                }
+                if (platform == ""){
+                    platform = "PC";
+                }
+                $.ajax({
+                    type: "get",
+                    url: "/getRankInfo",
+                    data: {
+                        "player": player,
+                        "platform": platform,
+                    },
+                    dataType: "json",
+                    success:function (result) {
+                        //判断数据是否有效
+                        if (result.code != 200){
+                            $("div.imgdiv img").css("pointer-events","none");
+                            //数据无效再把元素复原
+                            $("div.spandiv").animate({
+                                height: "100px",
+                                zIndex: "1",
+                            },500);
+                            $("div.searchdiv").animate({
+                                height: "300px",
+                                zIndex: "1",
+                            },500);
+                            return false;
+                        }
+                        // alert("code=" + result.code);
+                        var data = result.data;
+                        $("#userspan1").html("名字: " + data.player);
+                        $("#userspan2").html("状态: " + data.currentState);
+                        $("#userspan3").html("等级: " + data.level);
+                        $("#userspan4").html("英雄: " + data.selectedLegend);
+                        $("#userspan5").html("杀敌: " + data.totalKills);
+                        $("#userspan6").html("伤害: " + data.totalDamage);
+                        $("#spaninfo1").html("排名: " + data.rankPos);
+                        $("#spaninfo2").html("分数: " + data.rankScore);
+                        $("#spaninfo3").html("排名: " + data.arenaPos);
+                        $("#spaninfo4").html("分数: " + data.arenaScore);
+
+                        $("#modelimgsrc").attr("src",data.banner);
+                        $("#rankimgsrc").attr("src",data.rankImg);
+                        $("#arenaimgsrc").attr("src",data.arenaImg);
+
+                        //成功之后的动画
+                        doDynamic("maindiv");
+                    },
+                    //等待时候的动画
+                    beforeSend:function () {
+
+                        //隐藏不用的块儿
+                        $("div.spandiv").animate({
+                            height: "0px",
+                            zIndex: "-1",
+                        },500);
+                        $("div.searchdiv").animate({
+                            height: "0px",
+                            zIndex: "-1",
+                        },500);
+                        $("div.imgdiv img").css("pointer-events","auto");
+                    }
+                })
+            });
+            $("div.imgdiv img").click(function(){
+                //解放searchBtn
+                $("#searchBtn").css("pointer-events","auto");
+                $(this).css("pointer-events","none");
+
+                doRe();
+            });
+
+            $("body").mousemove(function (e) {
+                var percentX = e.clientX/window.outerWidth;
+                var offX = (-10)*percentX;
+
+                $("#modelimg img").css("--offX",offX + "px");
+            })
+        })
+
+        //动画函数
+        function doRe() {
+            $("div.modeldiv").animate({
+                opacity: "0",
+            },function () {
+                //隐藏的元素直接设置css就行，不需要动画了，毕竟看不见
+                $("div.modeldiv").css("z-index", "-1");
+                $("div.modeldiv").css("left", "0");
+                $("div.modeldiv").css("width", "300ox");
+                $("div.rankimg img").css("width", "0");
+                $("div.modeldiv").css("opacity", "0");
+                $("div.modeldiv").css("left", "0");
+                $("div.modeldiv").css("left", "0");
+                $("div.modelimg").css("opacity", "0");
+                $("span.userspan").css("opacity", "0");
+                $("span.spaninfo").css("opacity", "0");
+            });
+            var toolsW = $("div.toolsdiv").css("width");
+            $("div.toolsdiv").css("width","calc(50vw - 150px)");
+            var toolswidth = $("div.toolsdiv").css("width");
+            $("div.toolsdiv").css("width", toolsW);
+            $("div.toolsdiv").animate({
+                width: toolswidth,
+            });
+            $("div.maindiv").animate({
+                width: "300px",
+            },500,function () {
+                //然后把隐藏元素展示出来
+                $("div.imgdiv img").animate({
+                    width: "50px",
+                    height: "50px",
+                });
+                $("div.modeldiv").css("width","300px");
+                $("div.spandiv").animate({
+                    height: "100px",
+                    zIndex: "1",
+                },500);
+                $("div.searchdiv").animate({
+                    height: "300px",
+                    zIndex: "1",
+                },500);
+            })
+        }
+
+        function doDynamic(doc) {
+            //首先判断body的是否大于360px ,360px是最大展示面积
+            var toolswidth = ($("body").width() - 360) / 2;
+            if($("body").width() <= 360){
+                //如果大于则改变
+                toolswidth = 0;
+            }
+            // 拿到数据之后的动画
+            $("div.toolsdiv").animate({
+                width: toolswidth,
+            });
+            var windowheigth = $("body").height() - 20;
+            $("div."+ doc).animate({
+                width: "50px",
+                // height: windowheigth,
+            },500,function () {
+                //修改模态窗口可使，并层级提高
+                $("div.modeldiv").css("opacity","1");
+                $("div.modeldiv").css("z-index","0");
+                //移动模态窗口
+                $("div.modeldiv").animate({
+                    left: "60px",
+                },function () {
+                    var modelwidth = $("body").width() - 100;
+                    $("div.modeldiv").animate({
+                        width: modelwidth,
+                    },function(){
+                        $("div.rankimg img").animate({
+                            width: "100px",
+                            opacity: "1",
+                        })
+                    });
+                    $("div.modelimg").animate({
+                        opacity: "1",
+                    },1000);
+                    $("span.userspan").animate({
+                        opacity: "1",
+                    },500);
+                    $("span.spaninfo").animate({
+                        opacity: "1",
+                    },500);
+                });
+            });
+            $("div.imgdiv img").animate({
+                width: "30px",
+                height: "30px",
+            });
+            $("div.modeldiv").css("width","50px");
+        }
+    </script>
+</head>
+<body>
+<img class="backimgL" src="../image/eling.png" alt="恶灵">
+<div class="toolsdiv"></div>
+<div class="middlediv">
+    <div id="maindiv" class="maindiv">
+        <div class="imgdiv">
+            <img src="../image/apex-icon.png" alt="apex">
+        </div>
+
+        <div class="spandiv">
+            <span class="apex"></span>
+            <span class="apex">A</span>
+            <span class="apex">P</span>
+            <span class="apex">E</span>
+            <span class="apex">X</span>
+            <span class="apex"></span>
+        </div>
+
+        <div class="searchdiv">
+            <div class="inputdiv">
+                <input type="text" id="player" placeholder="名称"/>
+            </div>
+            <div class="inputdiv">
+                <input type="text" id="platform" placeholder="平台">
+            </div>
+            <div class="btndiv">
+                <button type="button" id="searchBtn">
+                    <span>查询</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 模态窗口 -->
+    <div class="modeldiv">
+        <div id="modelimg" class="modelimg">
+            <img id="modelimgsrc" src="" alt="英雄">
+        </div>
+        <div class="contentdiv">
+            <div class="userinfo">
+                <span class="userspan" id="userspan1" ></span>
+                <span class="userspan" id="userspan2" ></span>
+                <span class="userspan" id="userspan3" ></span>
+                <span class="userspan" id="userspan4" ></span>
+                <span class="userspan" id="userspan5" ></span>
+                <span class="userspan" id="userspan6" ></span>
+            </div>
+            <div class="rankdiv">
+                <div class="rankimg">
+                    <img id="rankimgsrc" src="" alt="段位">
+                </div>
+                <div class="rankinfo">
+                    <span class="spaninfo" id="spaninfo1" ></span>
+                    <span class="spaninfo" id="spaninfo2" ></span>
+                </div>
+            </div>
+            <div class="rankdiv">
+                <div class="rankimg">
+                    <img id="arenaimgsrc" src="" alt="段位">
+                </div>
+                <div class="rankinfo">
+                    <span class="spaninfo" id="spaninfo3" ></span>
+                    <span class="spaninfo" id="spaninfo4" ></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="toolsdiv"></div>
+<img class="backimgR" src="../image/ashi.png" alt="艾什">
+</body>
+</html>
